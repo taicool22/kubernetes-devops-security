@@ -14,6 +14,19 @@ pipeline {
               sh "mvn test"
               archive 'target/*.jar' //so that they can be downloaded later
             }
-        }        
+
+        }   
+      stage('Unit Tests and Jacoco') {
+            steps {
+              sh "mvn test"
+            }
+            post {
+                always {
+                   junits 'target/sure-reports/*.xml'
+                   jacoco execPattern: 'target/jacoco.exec'
+                } 
+              
+            }
+        }              
     }
 }

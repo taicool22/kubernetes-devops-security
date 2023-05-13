@@ -25,7 +25,14 @@ pipeline {
                    junit 'target/surefire-reports/*.xml'
                    jacoco execPattern: 'target/jacoco.exec'
                 } 
-              
+      stage('Mutation Test - PIT') {
+            steps {
+              sh "mvn test-compile org.pitest:pitest-maven:mutationCoverage"
+            }
+            post {
+                always {
+                   pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+                }         
             }
         }              
     }

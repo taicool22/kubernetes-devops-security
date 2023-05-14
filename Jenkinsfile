@@ -32,12 +32,12 @@ pipeline {
             steps {
               withSonarQubeEnv('SonarQube') {
               sh "mvn clean verify sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.projectName='numeric-application' -Dsonar.host.url=http://taicool-demo.eastus.cloudapp.azure.com:9000 -Dsonar.token=sqp_ec96e188cf9b3d3a9a708263d6103711c3b67179"
-             } 
-             timeout(time: 2, unit: 'MINUTES') {
-              script {
-                waitForQualityGate abortPipeline: true
+              }    
+              timeout(time: 1, unit: 'HOURS') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
               }
-             }
           } 
       }         
     }

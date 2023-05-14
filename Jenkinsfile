@@ -27,15 +27,18 @@ pipeline {
                 }
             } 
          }   
+
       stage('sonarQube - SAST') {
             steps {
+              withSonarQubeEnv('SonarQube') {
               sh "mvn clean verify sonar:sonar -Dsonar.projectKey=numeric-application1 -Dsonar.projectName='numeric-application' -Dsonar.host.url=http://taicool-demo.eastus.cloudapp.azure.com:9000 -Dsonar.token=sqp_7c75e169873f94f843ee950027de9584b80611b6"
-            } 
+             } 
             timeout(time: 2, unit: 'MINUTES') {
               script {
                 waitForQualityGate abortPipeline: true
               }
             }
-          }          
+          } 
+      }         
     }
 }

@@ -44,7 +44,7 @@ pipeline {
                 dependencyCheckPulisher pattern: 'target/dependency-check-report.xml'
               }
             }
-        }
+    
       }
     }
 }
